@@ -476,6 +476,18 @@ ActivateWhenReady(checkFn, timeout := 2000, callback := "") {
   return false
 }
 
+ActivateOrRun(idMethod, runCommand, timeout := 3000, onFound := "") {
+  hwnd := idMethod()
+  if hwnd {
+    WinActivate(hwnd)
+    if onFound
+      onFound(hwnd)
+    return true
+  }
+  Run(runCommand)
+  return ActivateWhenReady(idMethod, timeout, onFound)
+}
+
 ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "", profile := "",
   winClass := "") {
   global Browser1_ID, Browser2_ID, Browser3_ID
@@ -551,23 +563,122 @@ ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "", profile := ""
   return true
 }
 
-; ---------- SPECIFIC LAUNCHERS ----------
+; =======================================
+; APPLICATION ACTIVATION FUNCTIONS
+; =======================================
+ActivateLosslessCut() {
+  idMethod := () => WinExist("ahk_exe LosslessCut.exe")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "LosslessCut.lnk")
+}
+
+ActivateStreamDeck() {
+  idMethod := () => WinExist("ahk_exe StreamDeck.exe")
+  return ActivateOrRun(idMethod, StartMenuPathProgramData "Elgato\Stream Deck\Stream Deck.lnk"
+  )
+}
+
+ActivateOsu() {
+  idMethod := () => WinExist("ahk_exe osu!.exe")
+  return ActivateOrRun(idMethod, "C:\Users\ville\AppData\Local\osu!\osu!.exe")
+}
+
+ActivateTobiiGhost() {
+  idMethod := () => WinExist("ahk_exe TobiiGhost.exe")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Tobii\Tobii Ghost.lnk")
+}
+
+ActivateMailClient() {
+  idMethod := () => WinExist("ahk_exe olk.exe")
+  return ActivateOrRun(idMethod,
+    "C:\Users\ville\OneDrive\Desktop\Useful\ahk\Outlook - Shortcut.lnk")
+}
+
+ActivateSteam() {
+  idMethod := () => WinExist("ahk_exe steamwebhelper.exe")
+  return ActivateOrRun(idMethod, StartMenuPathProgramData "Steam\Steam.lnk")
+}
+
+ActivateAgeOfEmpires2() {
+  idMethod := () => WinExist("ahk_exe AoE2DE_s.exe")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Steam\Age of Empires II Definitive Edition.url"
+  )
+}
+
+ActivateAlacritty() {
+  SetTitleMatchMode 2
+  idMethod := () => WinExist("ahk_exe alacritty.exe")
+  return ActivateOrRun(idMethod,
+    "C:\Users\ville\scoop\apps\alacritty\current\alacritty.exe")
+}
+
+ActivateBraveBrowser() {
+  idMethod := () => WinExist("ahk_exe brave.exe")
+  return ActivateOrRun(idMethod, StartMenuPathProgramData "Brave.lnk")
+}
+
+ActivateBitwarden() {
+  idMethod := () => WinExist("ahk_exe Bitwarden.exe")
+  return ActivateOrRun(idMethod, StartMenuPathProgramData "Bitwarden.lnk")
+}
+
+ActivateSpotify() {
+  idMethod := () => WinExist("ahk_exe Spotify.exe")
+  return ActivateOrRun(idMethod, "spotify.exe") ; It's some bullshit windows store unfindable path
+}
+
+ActivateVSCode() {
+  idMethod := () => WinExist("ahk_exe Code.exe")
+  return ActivateOrRun(idMethod, "C:\Users\" A_UserName "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+  )
+}
+
+ActivatePowerShell() {
+  SetTitleMatchMode 2
+  idMethod := () => WinExist("ahk_exe WindowsTerminal.exe")
+  return ActivateOrRun(idMethod, "pwsh")
+}
+
+ActivateNotepad() {
+  idMethod := () => WinExist("ahk_exe notepad.exe")
+  return ActivateOrRun(idMethod, "notepad.exe")
+}
+
+ActivateOneNote() {
+  idMethod := () => WinExist("ahk_exe ONENOTE.EXE")
+  return ActivateOrRun(idMethod, StartMenuPathProgramData "OneNote.lnk")
+}
+
+ActivateKovaaks() {
+  idMethod := () => WinExist("ahk_exe FPSAimTrainer-Win64-Shipping.exe")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Steam\KovaaK 2.0.url")
+}
+
+ActivateDeadlock() {
+  idMethod := () => WinExist("ahk_exe deadlock.exe")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Steam\Deadlock.url")
+}
+
+ActivateDiscord() {
+  idMethod := () => WinExist("ahk_exe Discord.exe")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Discord Inc\Discord.lnk")
+}
+
 ActivatePyCharm() {
   SetTitleMatchMode 2
-  if WinExist("ahk_exe pycharm64.exe")
-    WinActivate
-  else {
-    ; Try to find PyCharm with wildcard for version
-    Loop Files, "C:\Program Files\JetBrains\PyCharm Community Edition*", "D"
-    {
-      batPath := A_LoopFileFullPath "\bin\pycharm64.exe"
-      if FileExist(batPath) {
-        Run batPath
-        return
-      }
+  idMethod := () => WinExist("ahk_exe pycharm64.exe")
+  hwnd := idMethod()
+  if hwnd
+    return WinActivate(hwnd)
+
+  Loop Files, "C:\Program Files\JetBrains\PyCharm Community Edition*", "D"
+  {
+    batPath := A_LoopFileFullPath "\bin\pycharm64.exe"
+    if FileExist(batPath) {
+      Run batPath
+      return ActivateWhenReady(idMethod, 3000)
     }
-    MsgBox "Could not find PyCharm executable."
   }
+  MsgBox "Could not find PyCharm executable."
 }
 
 ActivateOBS(moveChat := false) {
@@ -663,13 +774,6 @@ MoveProductionOBS(direction := "right") {
     WinMove(0, y, w, h, hwnd)
 }
 
-ActivateDiscord() {
-  if WinExist("ahk_exe Discord.exe")
-    WinActivate
-  else
-    Run StartMenuPathRoaming "Discord Inc\Discord.lnk"
-}
-
 ActivateSreamFeedApp() {
   idMethod := () => WinExist("ahk_exe StreamFeedApp.exe")
   hwnd := idMethod()
@@ -709,28 +813,13 @@ ActivateSreamFeedAppDebug() {
 }
 
 ActivateAutoDuck() {
-  DetectHiddenWindows true
-  hwnd := WinExist("ahk_exe Auto-Duck.exe")
-  if hwnd {
-    WinShow(hwnd)
-    WinActivate(hwnd)
-  }
-  else
-    Run "C:\Users\ville\OneDrive\Streaming\Software settings\AutoDuck\stream_duck.adrt"
-}
-
-ActivateLosslessCut() {
-  if WinExist("ahk_exe LosslessCut.exe")
-    WinActivate
-  else
-    Run StartMenuPathRoaming "LosslessCut.lnk"
-}
-
-ActivateStreamDeck() {
-  if WinExist("ahk_exe StreamDeck.exe")
-    WinActivate
-  else
-    Run StartMenuPathProgramData "Elgato\Stream Deck\Stream Deck.lnk"
+  idMethod := () => (DetectHiddenWindows(true), WinExist("ahk_exe Auto-Duck.exe"))
+  return ActivateOrRun(
+    idMethod,
+    "C:\Users\ville\OneDrive\Streaming\Software settings\AutoDuck\stream_duck.adrt",
+    3000,
+    (hwnd) => WinShow(hwnd)
+  )
 }
 
 ActivateStreamerBot(portableVersion := "") {
@@ -741,84 +830,16 @@ ActivateStreamerBot(portableVersion := "") {
     StreamingProgramsPath "streamerbot-portable-ftp\Streamer.bot\Streamer.bot.exe"
   )
 
-  targetPath := paths[portableVersion]
-
-  hwnd := ""
-  for win in WinGetList("ahk_exe Streamer.bot.exe") {
-    title := WinGetTitle(win)
-    if InStr(title, portableVersion) {
-      hwnd := win
-      break
+  FindStreamerBotWindow(version) {
+    for win in WinGetList("ahk_exe Streamer.bot.exe") {
+      if InStr(WinGetTitle(win), version)
+        return win
     }
+    return 0
   }
-  if hwnd
-    return WinActivate(hwnd)
+  idMethod := () => FindStreamerBotWindow(portableVersion)
 
-  Run('"' targetPath '"')
-}
-
-ActivateOsu() {
-  if WinExist("ahk_exe osu!.exe")
-    WinActivate
-  else
-    Run "C:\Users\ville\AppData\Local\osu!\osu!.exe"
-}
-
-ActivateTobiiGhost() {
-  if WinExist("ahk_exe TobiiGhost.exe")
-    WinActivate
-  else
-    Run StartMenuPathRoaming "Tobii\Tobii Ghost.lnk"
-}
-
-ActivateMailClient() {
-  if WinExist("ahk_exe olk.exe")
-    WinActivate
-  else
-    Run "C:\Users\ville\OneDrive\Desktop\Useful\ahk\Outlook - Shortcut.lnk"
-}
-
-ActivateSteam() {
-  if WinExist("ahk_exe steamwebhelper.exe")
-    WinActivate
-  else
-    Run StartMenuPathProgramData "Steam\Steam.lnk"
-}
-
-ActivateAgeOfEmpires2() {
-  if WinExist("ahk_exe AoE2DE_s.exe")
-    WinActivate
-  else
-    Run StartMenuPathRoaming "Steam\Age of Empires II Definitive Edition.url"
-}
-
-ActivateAlacritty() {
-  SetTitleMatchMode 2
-  if WinExist("ahk_exe alacritty.exe")
-    WinActivate
-  else
-    Run "C:\Users\ville\scoop\apps\alacritty\current\alacritty.exe"
-}
-
-ActivateBraveBrowser() {
-  if WinExist("ahk_exe brave.exe")
-    WinActivate
-  else
-    Run StartMenuPathProgramData "Brave.lnk"
-}
-
-ActivateBitwarden() {
-  if WinExist("ahk_exe Bitwarden.exe")
-    WinActivate
-  else
-    Run StartMenuPathProgramData "Bitwarden.lnk"
-}
-
-ActivateSpotify() {
-  if WinExist("ahk_exe Spotify.exe")
-    WinActivate
-  else
-    Run "spotify.exe" ; It's some bullshit windows store unfindable path
+  return ActivateOrRun(idMethod, '"' paths[portableVersion] '"')
 }
 
 ActivateBrowser1Window() {
@@ -863,13 +884,6 @@ ActivateUngroupedChromeWindow() {
 
   MsgBox("❌ No ungrouped Chrome windows found")
   return false
-}
-
-ActivateVSCode() {
-  if WinExist("ahk_exe Code.exe")
-    WinActivate
-  else
-    Run "C:\Users\" A_UserName "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 }
 
 ActivateWezTerm() {
@@ -934,36 +948,16 @@ ActivateWezTermTitled(title) {
   MsgBox "Could not find WezTerm executable at any known path:`n`n" . pretty
 }
 
-ActivatePowerShell() {
-  SetTitleMatchMode 2
-  if WinExist("ahk_exe WindowsTerminal.exe")
-    WinActivate
-  else
-    Run "pwsh"
-}
-
 ActivateAdminPowerShell() {
   adminTitle := "Administrator: C:\Program Files\PowerShell\7\pwsh.exe"
   selectAdminTitle := "Select " adminTitle
-
-  if WinExist(adminTitle)
-    WinActivate adminTitle
-  else if WinExist(selectAdminTitle)
-    WinActivate selectAdminTitle
-  else
-    Run "*RunAs pwsh.exe"
+  idMethod := () => WinExist(adminTitle) || WinExist(selectAdminTitle)
+  return ActivateOrRun(idMethod, "*RunAs pwsh.exe")
 }
 
 ActivateExplorer() {
   idMethod := () => WinExist("ahk_exe explorer.exe ahk_class CabinetWClass")
-  hwnd := idMethod()
-  if hwnd
-    WinActivate(hwnd)
-  else
-  {
-    Run "explorer.exe"
-    ActivateWhenReady(idMethod, 2000)
-  }
+  ActivateOrRun(idMethod, "explorer.exe")
 }
 
 ActivateNeo4j() {
@@ -974,45 +968,9 @@ ActivateNeo4j() {
     Run "C:\Users\ville\AppData\Local\Programs\Neo4j Desktop\Neo4j Desktop.exe"
 }
 
-ActivateNotepad() {
-  if WinExist("ahk_exe notepad.exe")
-    WinActivate
-  else
-    Run "notepad.exe"
-}
-
-ActivateOneNote() {
-  if WinExist("ahk_exe ONENOTE.EXE")
-    WinActivate
-  else
-    Run StartMenuPathProgramData "OneNote.lnk"
-}
-
 ActivateNeovide() {
-  if WinExist("ahk_exe neovide.exe")
-    WinActivate
-  else {
-    Run "C:\Users\ville\scoop\shims\neovide.exe"
-    hwnd := ""
-    Loop 50 {
-      if hwnd := WinExist("ahk_exe neovide.exe")
-        return WinActivate(hwnd)
-      Sleep 50
-    }
-  }
-}
-
-ActivateKovaaks() {
-  if WinExist("ahk_exe FPSAimTrainer-Win64-Shipping.exe")
-    WinActivate
-  else Run StartMenuPathRoaming "Steam\KovaaK 2.0.url"
-}
-
-ActivateDeadlock() {
-  if WinExist("ahk_exe deadlock.exe")
-    WinActivate
-  else
-    Run StartMenuPathRoaming "Steam\Deadlock.url"
+  idMethod := () => WinExist("ahk_exe neovide.exe")
+  return ActivateOrRun(idMethod, "C:\Users\ville\scoop\shims\neovide.exe", 2500)
 }
 
 QuickSetup(mode := "simple") {
