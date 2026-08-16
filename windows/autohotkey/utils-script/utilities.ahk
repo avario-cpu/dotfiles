@@ -955,10 +955,15 @@ ActivateAdminPowerShell() {
 }
 
 ActivateExplorer() {
-  if WinExist("ahk_exe explorer.exe ahk_class CabinetWClass")
-    WinActivate
+  idMethod := () => WinExist("ahk_exe explorer.exe ahk_class CabinetWClass")
+  hwnd := idMethod()
+  if hwnd
+    WinActivate(hwnd)
   else
+  {
     Run "explorer.exe"
+    ActivateWhenReady(idMethod, 2000)
+  }
 }
 
 ActivateNeo4j() {
