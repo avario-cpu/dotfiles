@@ -1,0 +1,101 @@
+#Include persistence.ahk
+ActivateWhenReady(checkFn, timeout := 2000, callback := "") {
+  end := A_TickCount + timeout
+  while (A_TickCount < end) {
+    if (hwnd := checkFn()) {
+      WinActivate(hwnd)
+      if callback
+        callback(hwnd)
+      return true
+    }
+    Sleep 50
+  }
+  return false
+}
+
+ActivateOrRun(idMethod, runCommand, timeout := 3000, onFound := "") {
+  hwnd := idMethod()
+  if hwnd {
+    WinActivate(hwnd)
+    if onFound
+      onFound(hwnd)
+    return true
+  }
+  Run(runCommand)
+  return ActivateWhenReady(idMethod, timeout, onFound)
+}
+
+ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "", profile := "",
+  winClass := "") {
+  global Browser1_ID, Browser2_ID, Browser3_ID
+
+  if (IsSet(windowID) && windowID) {
+    VerifyWindowIDs()
+    if WinExist("ahk_id " windowID) {
+      WinActivate("ahk_id " windowID)
+      return true
+    }
+  }
+
+  ; IDs already claimed by other slots — never valid candidates for a "new" window
+  claimedIDs := [Browser1_ID, Browser2_ID, Browser3_ID]
+
+  if (profile)
+    ; for chrome see chrome://version
+    runCommand .= ' --profile-directory="' profile '"'
+
+  if (urls)
+    runCommand := runCommand " --new-window " urls
+
+  matchCriteria := "ahk_exe " exeName (winClass ? " ahk_class " winClass : "")
+  beforeHWNDs := WinGetList(matchCriteria)
+  Run(runCommand)
+
+  newHWND := 0
+  Loop 50 {
+    Sleep 100
+    afterHWNDs := WinGetList(matchCriteria)
+    for _, hwnd in afterHWNDs {
+      if hwnd = windowID
+        continue
+      found := false
+      for _, old in beforeHWNDs {
+        if hwnd = old {
+          found := true
+          break
+        }
+      }
+      if found
+        continue
+      isClaimed := false
+      for _, claimed in claimedIDs {
+        if hwnd = claimed {
+          isClaimed := true
+          break
+        }
+      }
+      if isClaimed
+        continue
+
+      ; debounce: make sure it's still alive 150ms later (filters transient popups)
+      candidate := hwnd
+      Sleep 150
+      if WinExist("ahk_id " candidate) {
+        newHWND := candidate
+        break 2
+      }
+    }
+  }
+
+  if !newHWND {
+    MsgBox "❌ Could not detect the new " exeName " window."
+    return false
+  }
+
+  windowID := newHWND
+  WinActivate("ahk_id " newHWND)
+  if (exeName = "chrome.exe")
+    AddToChromeWindowList(windowID)
+  VerifyWindowIDs()
+  return true
+}
