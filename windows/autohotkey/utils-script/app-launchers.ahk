@@ -355,6 +355,8 @@ ActivateNeo4j() {
   SetTitleMatchMode 2
   if WinExist("neo4j@bolt://localhost:7687")
     WinActivate
+  else if WinExist("Neo4j Desktop")
+    WinActivate
   else
     Run "C:\Users\ville\AppData\Local\Programs\Neo4j Desktop\Neo4j Desktop.exe"
 }
