@@ -142,7 +142,9 @@ ActivateOBS(moveChat := false) {
       WinMove(x + 20, y + 110, 800, 1230, chat)
     }
   } else {
-    Run StartMenuPathProgramData "OBS Studio\OBS Studio (64bit).lnk"
+    dir := "C:\Program Files\obs-studio\bin\64bit"
+    exe := dir . "\obs64.exe"
+    Run('"' exe '"' ObsProductionRemoteDebugArgs, dir)
     ActivateWhenReady(idMethod, 3000)
   }
 }
@@ -323,7 +325,7 @@ ActivateWezTermTitled(title) {
       cmd := q path q " start"
       cmd .= " -- pwsh -NoExit -Command " q psCmd q
       Run(cmd)
-      if ActivateWhenReady(idMethod, 4000)
+      if ActivateWhenReady(idMethod, 8000)
         return
       else {
         MsgBox "Could not activate '" title "' window after launching from: " path
