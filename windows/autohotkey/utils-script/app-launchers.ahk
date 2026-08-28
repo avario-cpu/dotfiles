@@ -379,7 +379,6 @@ QuickSetup(mode := "simple") {
   }
   else if mode = "full" {
     ActivateTobiiGhost()
-    ActivateOBS()
     ActivateAutoDuck()
     ActivateBraveBrowser()
     ActivateDiscord()
