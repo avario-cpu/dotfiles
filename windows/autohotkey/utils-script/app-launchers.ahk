@@ -392,5 +392,6 @@ QuickSetup(mode := "simple") {
     ActivateBrowser1Window()
     ActivateBrowser2Window()
     ActivateBrowser3Window()
+    ActivateSpotify()
   }
 }
