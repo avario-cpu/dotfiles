@@ -1,12 +1,19 @@
 // Rebind J and K for tab navigation
-api.map('K', 'R');
-api.map('J', 'E');
+api.map("K", "R");
+api.map("J", "E");
 
 // Rebind H and L for history navigation
-api.map('H', 'S');
-api.map('L', 'D');
+api.map("H", "S");
+api.map("L", "D");
 
 // Unbind some nonsense
-api.iunmap('<Ctrl-a>');
-api.unmap('<Ctrl-h>');
+api.iunmap("<Ctrl-a>");
+api.unmap("<Ctrl-h>");
 
+// Open in new tab with F labels
+api.mapkey("F", "custom", function () {
+  api.Hints.create("", api.Hints.dispatchMouseClick, {
+    tabbed: true,
+    active: true,
+  });
+});
