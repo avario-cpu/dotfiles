@@ -3156,19 +3156,25 @@ macros {
     wait-ms = <0>;
     tap-ms = <0>;
     bindings = <&macro_tap &kp DOUBLE_QUOTES &kp DOUBLE_QUOTES &kp DOUBLE_QUOTES>;
-)
+  )
 
-ZMK_MACRO(triple_fslash,
+  ZMK_MACRO(triple_fslash,
     wait-ms = <0>;
     tap-ms = <0>;
     bindings = <&macro_tap &kp FSLH &kp FSLH &kp FSLH>;
-)
+  )
 
-ZMK_MACRO(triple_equals,
+  ZMK_MACRO(triple_equals,
     wait-ms = <0>;
     tap-ms = <0>;
     bindings = <&macro_tap &kp EQUAL &kp EQUAL &kp EQUAL>;
-)
+  )
+
+  ZMK_MACRO(nvim_spell_suggest,
+    wait-ms = <0>;
+    tap-ms = <0>;
+    bindings = <&macro_tap &kp Z &kp EQUAL>;
+  )
 
   //
   // Linux Magic System Request Key - hold this down and type REISUB
