@@ -1,4 +1,10 @@
 #Include persistence.ahk
+
+EnsureFullscreen(hwnd) {
+  if WinGetMinMax(hwnd) != 1
+    WinMaximize(hwnd)
+}
+
 ActivateWhenReady(checkFn, timeout := 2000, callback := "") {
   end := A_TickCount + timeout
   while (A_TickCount < end) {

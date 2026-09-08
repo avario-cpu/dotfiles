@@ -19,7 +19,7 @@ ActivateOsu() {
 
 ActivateTobiiGhost() {
   idMethod := () => WinExist("ahk_exe TobiiGhost.exe")
-  return ActivateOrRun(idMethod, StartMenuPathRoaming "Tobii\Tobii Ghost.lnk")
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Tobii\Tobii Ghost.lnk", ,ensureFullscreen)
 }
 
 ActivateMailClient() {
