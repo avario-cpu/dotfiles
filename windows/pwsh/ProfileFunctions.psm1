@@ -47,6 +47,20 @@ function temp {
   Set-Location "$env:TEMP"
 }
 
+# Invoke python Stream Deck icon generator script
+function genico {
+  param([string]$path)
+  $repoRoot = $env:STREAMING_REPO_PATH
+  & python `
+    "$repoRoot\external\streamdeck\utils\generate-icons\generate_icons.py"
+}
+
+function pyvenv {
+  $repoRoot = $env:STREAMING_REPO_PATH
+  . $repoRoot\.venv\Scripts\Activate.ps1
+  Set-PythonPath "$repoRoot"
+}
+
 # List all dot-sourced scripts in the current session
 function listdotsourced{
   (Get-History | Where-Object { $_.CommandLine -match '^\.\s+' }).CommandLine
@@ -218,7 +232,10 @@ function fpaste {
 }
 
 function Set-PythonPath {
-  $env:PYTHONPATH = (Get-Location).Path
+  param(
+    [string]$Path = (Get-Location).Path
+  )
+  $env:PYTHONPATH = $Path
   Write-Output "PYTHONPATH set to: $env:PYTHONPATH"
 }
 
