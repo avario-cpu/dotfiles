@@ -1,6 +1,6 @@
 #!/bin/bash
-WSL_SOURCE="/home/avario/woertsposzibllen4me"
-WIN_DEST="/mnt/c/Users/ville/myfiles/woertsposzibllen4me"
+WSL_SOURCE="/home/avario/next-level-live-streaming"
+WIN_DEST="/mnt/c/Users/ville/myfiles/next-level-live-streaming"
 
 # Check if src directory exists
 if [ ! -d "$WSL_SOURCE/src" ]; then

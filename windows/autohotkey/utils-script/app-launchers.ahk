@@ -19,7 +19,8 @@ ActivateOsu() {
 
 ActivateTobiiGhost() {
   idMethod := () => WinExist("ahk_exe TobiiGhost.exe")
-  return ActivateOrRun(idMethod, StartMenuPathRoaming "Tobii\Tobii Ghost.lnk", ,ensureFullscreen)
+  return ActivateOrRun(idMethod, StartMenuPathRoaming "Tobii\Tobii Ghost.lnk", ,
+    ensureFullscreen)
 }
 
 ActivateMailClient() {
@@ -227,7 +228,7 @@ ActivateSreamFeedApp() {
   }
   else {
     Run("dotnet run",
-      "C:\Users\ville\myfiles\git-repos\woertsposzibllen4me\external\StreamFeedApp",
+      StreamingRepoPath "external\StreamFeedApp",
       "Min")
     ActivateWhenReady(idMethod, 3000, Reposition)
   }

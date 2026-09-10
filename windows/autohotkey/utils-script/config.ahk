@@ -17,3 +17,6 @@ global WezTermPaths := [
   "C:\Users\ville\scoop\apps\wezterm-nightly\current\wezterm-gui.exe",
   "C:\Users\ville\scoop\shims\wezterm-gui.exe"
 ]
+
+global StreamingRepoPath :=
+  "C:\Users\ville\myfiles\git-repos\next-level-live-streaming\"

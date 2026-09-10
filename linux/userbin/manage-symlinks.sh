@@ -104,7 +104,7 @@ declare -A SYMLINKS=(
 
   # User binaries
   ["$DOTFILES_DIR/linux/userbin/wsl-ssh-agent-relay.sh"]="$HOME/bin/wsl-ssh-agent-relay.sh"
-  ["$DOTFILES_DIR/linux/userbin/sync-woertsposzibllen4me.sh"]="$HOME/bin/sync-woertsposzibllen4me.sh"
+  ["$DOTFILES_DIR/linux/userbin/sync-next-level-live-streaming.sh"]="$HOME/bin/sync-next-level-live-streaming.sh"
 
   # Yazi config
   ["$DOTFILES_DIR/yazi-config/keymap.toml"]="$HOME/.config/yazi/keymap.toml"

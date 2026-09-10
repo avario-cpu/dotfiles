@@ -15,7 +15,7 @@ $env:YAZI_FILE_ONE="C:\Program Files\Git\usr\bin\file.exe"
 $env:MYFILES_PATH = "$HOME\myfiles"
 $env:DOTFILES_PATH = "$env:MYFILES_PATH\dotfiles"
 $env:STREAMING_DATA_PATH = "$env:MYFILES_PATH\streaming-data"
-$env:STREAMING_REPO_PATH = "$env:MYFILES_PATH\git-repos\woertsposzibllen4me"
+$env:STREAMING_REPO_PATH = "$env:MYFILES_PATH\git-repos\next-level-live-streaming"
 
 $env:STREAMER_BOT_PRODUCTION_PATH= Join-Path $env:MYFILES_PATH `
   "streaming-programs\streamerbot-portable-production\Streamer.bot"

@@ -5,7 +5,6 @@
 global LeaderCommands := Map(
   ".m", WriteMessageDontResendAllCode,
   ".n", ActivateOneNote,
-  ".w", WriteMessageWorstUserName,
   "/", (*) => ReplaceSlashes("/"),
   "0", ActivateUngroupedChromeWindow,
   "1", ActivateBrowser1Window,

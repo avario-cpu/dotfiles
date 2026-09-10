@@ -50,9 +50,10 @@ function temp {
 # Invoke python Stream Deck icon generator script
 function genico {
   param([string]$path)
+  pyvenv
   $repoRoot = $env:STREAMING_REPO_PATH
   & python `
-    "$repoRoot\external\streamdeck\utils\generate-icons\generate_icons.py"
+    "$repoRoot\external\streamdeck\utils\generate-icons\main.py"
 }
 
 function pyvenv {
