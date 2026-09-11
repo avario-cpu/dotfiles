@@ -12,7 +12,7 @@ TraySetIcon "..\icons\utils.png"
 
 #Include keyboard-detect.ahk
 #Include leader-key.ahk
-#Include leader-commands.ahk
+#Include leader-hotkeys.ahk
 #Include overlay.ahk
 
 !Home:: ToggleMousePosOverlay()

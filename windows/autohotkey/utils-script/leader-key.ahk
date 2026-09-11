@@ -1,5 +1,5 @@
 #Include config.ahk
-#Include leader-commands.ahk
+#Include leader-hotkeys.ahk
 global LeaderKeyActive := false
 global LeaderKeyBuffer := ""
 global LeaderKeyTimeout := 2000

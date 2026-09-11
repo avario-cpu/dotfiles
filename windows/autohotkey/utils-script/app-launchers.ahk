@@ -99,6 +99,12 @@ ActivateDiscord() {
   return ActivateOrRun(idMethod, StartMenuPathRoaming "Discord Inc\Discord.lnk")
 }
 
+ActivateVlc() {
+  idMethod := () => WinExist("ahk_exe vlc.exe")
+  return ActivateOrRun(idMethod, StartMenuPathProgramData "VideoLAN\VLC media player.lnk"
+  )
+}
+
 ActivatePyCharm() {
   SetTitleMatchMode 2
   idMethod := () => WinExist("ahk_exe pycharm64.exe")
