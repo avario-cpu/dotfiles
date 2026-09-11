@@ -4,8 +4,13 @@ local act = wezterm.action
 local manually_set_titles = {}
 local workspace_switcher =
   wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-local font_size = 11.8 -- Allows for 97/98 char length lines in Nvim vs 87/88 with 12.0.
--- local font_size = 12
+
+-- local font_size = 11.8 -- Allows for 97/98 char length lines in Nvim vs 87/88 with 12.0.
+
+-- Setting for 175% scaling in Windows, (live streamnig) lets us have just about 150 nvim columns
+-- before a steep dropoff to 141 at 12.5
+local font_size = 12.4
+
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = font_size
 config.default_cursor_style = "SteadyBlock"
