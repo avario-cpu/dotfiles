@@ -3,10 +3,10 @@
   "keyboard": "glove80",
   "firmware_api_version": "1",
   "locale": "en-US",
-  "uuid": "a3f30214-d8e3-4b4c-bc93-f0d89fb3598b",
+  "uuid": "ea524f7a-f188-4626-9131-0da230f0dfb7",
   "parent_uuid": "a3f30214-d8e3-4b4c-bc93-f0d89fb3598b",
   "unlisted": false,
-  "date": 1788947679,
+  "date": 1789125647,
   "creator": "avario",
   "title": "Glorious Engrammer v52 – overhaul – aoe2 & deadlock gaming",
   "notes": "Overhaul of Sunaku's Keymap v52 for the \"Glorious Engrammer\" 🧑‍🚀🚀✨\n- Intro & setup: https://github.com/sunaku/glove80-keymaps/tree/v52/#readme\n- Release notes: https://github.com/sunaku/glove80-keymaps/releases/tag/v52\n- Printable map: https://github.com/sunaku/glove80-keymaps/raw/v52/README/all-layer-diagrams.pdf\n- Documentation: https://sunaku.github.io/moergo-glove80-keyboard.html#layers\n- Discord forum: #glorious-engrammer channel in https://www.moergo.com/discord",
@@ -9763,7 +9763,12 @@
         "value": "&none"
       },
       {
-        "value": "&none"
+        "value": "&kp",
+        "params": [
+          {
+            "value": "PSCRN"
+          }
+        ]
       },
       {
         "value": "&none"

@@ -368,7 +368,7 @@
           ___ ___ ___ ___ ___ ___                                     AZU AZU AZU AZU AZU AZU
           ___ ___ ___ ___ ___ ___                                     ___ PNK PNK PNK PNK PNK
           ___ MAJ CYN GRN YLW ___                                     GDN PNK PNK PNK PNK PNK
-          ___ ___ ___ ___ ___ ___     RED ___ ___     COR ORN BLU     ___ PNK PNK PNK PNK PNK
+          ___ ___ ___ BLU ___ ___     RED ___ ___     COR ORN BLU     ___ PNK PNK PNK PNK PNK
           ___ ___ ___ ___ ___         ___ ___ ___     COR CYN CYN         CHU CHU CHU CHU CHU
         >;
         layer-id = <LAYER_Function>;
