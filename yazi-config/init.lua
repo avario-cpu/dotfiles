@@ -18,7 +18,7 @@ end
 table.insert(bookmarks, {
   tag = "Desktop",
   path = home_path .. path_sep .. "Desktop" .. path_sep,
-  key = "d",
+  key = "D",
 })
 
 require("yamb"):setup({
