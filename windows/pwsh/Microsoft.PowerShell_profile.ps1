@@ -104,6 +104,7 @@ $pathsToAdd = @(
   "$HOME\myfiles\programs\PROGRAMS_ON_PATH"
   "C:\Program Files\Git\bin"
   "$env:LOCALAPPDATA\nvim-data\mason\bin"
+  "$env:APPDATA\Python\Python313\Scripts"
 )
 
 foreach ($path in $pathsToAdd) {
