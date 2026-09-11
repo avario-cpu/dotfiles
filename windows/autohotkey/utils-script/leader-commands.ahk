@@ -50,4 +50,5 @@ global LeaderCommands := Map(
   "w", ActivateWezTerm,
   "x", ActivateExplorer,
   "y", ActivatePyCharm,
+  "z", ActivateZoom
 )

@@ -342,6 +342,16 @@ ActivateWezTermTitled(title) {
   MsgBox "Could not find WezTerm executable at any known path:`n`n" . pretty
 }
 
+ActivateZoom() {
+  idMethod := () => WinExist(DetectHiddenWindows(true), "ahk_exe Zoom.exe")
+  return ActivateOrRun(
+    idMethod,
+    StartMenuPathProgramData "Zoom\Zoom Workplace.lnk",
+    3000,
+    (hwnd) => WinShow(hwnd)
+  )
+}
+
 ActivateAdminPowerShell() {
   adminTitle := "Administrator: C:\Program Files\PowerShell\7\pwsh.exe"
   selectAdminTitle := "Select " adminTitle
