@@ -222,11 +222,16 @@ ActivateSreamFeedApp() {
   idMethod := () => WinExist("ahk_exe StreamFeedApp.exe")
   hwnd := idMethod()
   Reposition(hwnd) {
-    if WinGetMinMax(hwnd) != 1 {
+    if WinGetMinMax(hwnd) != 1
       WinRestore(hwnd)
-      WinMove(-2300, , , , hwnd)
-    }
-    WinMaximize(hwnd)
+
+    targetX := -2300
+    monIdx := GetMonitorAt(targetX, 0)
+    MonitorGetWorkArea(monIdx, &mLeft, &mTop, &mRight, &mBottom)
+
+    width := (mRight - mLeft) // 2
+    height := mBottom - mTop
+    WinMove(mRight - width, mTop, width, height, hwnd)
     WinActivate(hwnd)
   }
   if hwnd {

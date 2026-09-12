@@ -5,6 +5,15 @@ EnsureFullscreen(hwnd) {
     WinMaximize(hwnd)
 }
 
+GetMonitorAt(x, y) {
+  loop MonitorGetCount() {
+    MonitorGetWorkArea(A_Index, &l, &t, &r, &b)
+    if (x >= l && x < r && y >= t && y < b)
+      return A_Index
+  }
+  return MonitorGetPrimary()
+}
+
 ActivateWhenReady(checkFn, timeout := 2000, callback := "") {
   end := A_TickCount + timeout
   while (A_TickCount < end) {
