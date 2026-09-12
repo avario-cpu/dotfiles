@@ -27,7 +27,9 @@ Hotkey "Space", MakeCallback("Space")
 Hotkey "^Space", MakeCallback("Space")
 
 specials := [
-  "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "/", "\", "]", "[", ".", ",", ";"]
+  "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "/", "\", "]", "[", ".", ",", ";",
+  "-", "_", "=", "+", "{", "}", "|", ":", "'", "``", "~"
+]
 
 for s in specials {
   Hotkey s, MakeCallback(s)
