@@ -403,6 +403,7 @@ QuickSetup(mode := "simple") {
     ActivateWezTermTitled("WezTerm - secondary")
     ActivateStreamerBot(portableVersion := "production")
     ActivateStreamerBot(portableVersion := "ftp")
+    ActivateSreamFeedApp()
     ActivateOBS()
     ActivateOBSPortable(profile := "ftp")
     ActivateOBSPortable(profile := "vcam")
