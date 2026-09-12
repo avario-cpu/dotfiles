@@ -1,6 +1,7 @@
 #Include app-launchers.ahk
 #Include misc.ahk
 #Include chrome-windows.ahk
+#Include grouped-apps-manager.ahk
 
 global LeaderCommands := Map(
   ".m", WriteMessageDontResendAllCode,
@@ -51,5 +52,13 @@ global LeaderCommands := Map(
   "w", ActivateWezTerm,
   "x", ActivateExplorer,
   "y", ActivatePyCharm,
-  "z", ActivateZoom
+  "z", ActivateZoom,
+  ; `;` leader commands for handling more than one app at once
+  ";Spacef", (*) => QuickSetup(mode := "full"),
+  ";Spaces", (*) => QuickSetup(mode := "simple"),
+  ";ca", (*) => CloseStreamApps(group := "all"),
+  ";cd", (*) => QuitStreamDeck(),
+  ";cp", (*) => CloseStreamApps(group := "production"),
+  ";sa", (*) => StartStreamApps(group := "all"),
+  ";sp", (*) => StartStreamApps(group := "production"),
 )

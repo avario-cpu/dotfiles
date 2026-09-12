@@ -69,11 +69,3 @@ CancelLeaderKey() {
   SetTimer(CancelLeaderKey, 0)
   ToolTip()
 }
-
-; Display a ToolTip message after the clear from having a cmd match happens
-DelayedToolTipMsg(text, duration := 2000) {
-  SetTimer(() => (
-    ToolTip(text),
-    SetTimer(() => ToolTip(), -duration)
-  ), -10)
-}
